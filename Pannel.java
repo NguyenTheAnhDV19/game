@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Collections;
 
 public class Pannel extends JPanel implements Runnable {
+    button Button_ = new button();
     keyInput keyinput = new keyInput();
     player Player = new player(keyinput);
     ball Ball = new ball(keyinput,Player);
@@ -14,8 +14,11 @@ public class Pannel extends JPanel implements Runnable {
     Pannel() {
         thread.start();
         Ball.update();
+        this.add(Button_);
+        this.setBounds(0,0,400,400);
         this.addKeyListener(keyinput);
         this.setFocusable(true);
+        Button_.addActionListener(e -> press());
     }
 
     public void paintComponent(Graphics g)
@@ -30,13 +33,23 @@ public class Pannel extends JPanel implements Runnable {
         Thread.sleep(FPS);
         Player.update();
         Brick.update();
+        displayButton();
     }
 
-    public void new_game(){
+    public void displayButton(){
+        if(Ball.lost() == true){
+            Button_.setVisible(true);
+            Button_.setFocusable(true);
+        }else{
+            Button_.setVisible(false);
+            Button_.setFocusable(false);
+        }
+    }
+
+    public void press(){
         Brick.List_.clear();
-        Ball.x = 200; Ball.y = 200;
-        Ball.speedY = 0; Ball.speedX = 0;
-        Brick.setUp();
+        Collections.addAll(Brick.List_,0,0,0,20,0,40,0,60,100,0,100,20,100,40,100,60,200,0,200,20,200,40,200,60,300,0,300,20,300,40,300,60);
+        Ball.setDefault();
     }
 
     @Override
