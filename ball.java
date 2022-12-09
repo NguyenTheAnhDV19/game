@@ -9,7 +9,7 @@ public class ball extends entity implements Runnable {
         this.Player = Player;
         setDefault();
     }
-    private void setDefault(){
+    public void setDefault(){
         x = 200;
         y = 200;
     }
@@ -36,7 +36,7 @@ public class ball extends entity implements Runnable {
         }
     }
 
-    private boolean lost(){
+    public boolean lost(){
         if(y+20 >= 400){
             return true;
         }
